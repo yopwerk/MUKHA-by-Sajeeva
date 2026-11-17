@@ -1128,6 +1128,7 @@ ul,ol { list-style:none; }
 @media (max-width: 1023px) {
   .stepper__count {
     color: rgba(30,32,30,.4); /* Slightly darker on gradient */
+    margin-bottom: .65rem; /* Tighter spacing */
   }
 }
 .stepper__content h3 {
@@ -1138,17 +1139,40 @@ ul,ol { list-style:none; }
   color: var(--charcoal);
   margin-bottom: 1rem;
 }
+
+@media (max-width: 1023px) {
+  .stepper__content h3 {
+    font-size: clamp(1.35rem,2.5vw,1.75rem); /* Slightly smaller on mobile */
+    margin-bottom: .75rem; /* Tighter spacing */
+  }
+}
+
 .stepper__content p {
   font-size: .9375rem;
   line-height: 1.78;
   color: rgba(30,32,30,.62);
   margin-bottom: 1.5rem;
 }
+
+@media (max-width: 1023px) {
+  .stepper__content p {
+    font-size: .875rem; /* Smaller font */
+    line-height: 1.7; /* Tighter line height */
+    margin-bottom: 1.1rem; /* Tighter spacing */
+  }
+}
 .stepper__list {
   display: flex;
   flex-direction: column;
   gap: .75rem;
 }
+
+@media (max-width: 1023px) {
+  .stepper__list {
+    gap: .6rem; /* Tighter spacing on mobile */
+  }
+}
+
 .stepper__list li {
   display: flex;
   align-items: flex-start;
@@ -1156,6 +1180,14 @@ ul,ol { list-style:none; }
   font-size: .875rem;
   color: rgba(30,32,30,.65);
   line-height: 1.6;
+}
+
+@media (max-width: 1023px) {
+  .stepper__list li {
+    font-size: .8125rem; /* Slightly smaller */
+    line-height: 1.55; /* Tighter */
+    gap: .65rem;
+  }
 }
 .stepper__list li::before {
   content: '';
@@ -1173,8 +1205,8 @@ ul,ol { list-style:none; }
   .stepper__visual {
     order: -1;
     width: 100%;
-    min-height: 280px; /* Taller untuk gambar lebih terlihat */
-    margin-bottom: -80px; /* Overlap dengan content */
+    min-height: 320px; /* Taller untuk gambar lebih dalam */
+    margin-bottom: -120px; /* Overlap lebih banyak - gambar masuk ke content */
     z-index: 1;
   }
   
@@ -1184,12 +1216,13 @@ ul,ol { list-style:none; }
     background: linear-gradient(
       to top,
       var(--bg) 0%,
-      var(--bg) 60%,
-      rgba(246,244,239,0.95) 75%,
-      rgba(246,244,239,0.7) 85%,
-      rgba(246,244,239,0) 100%
+      var(--bg) 50%,
+      rgba(246,244,239,0.9) 65%,
+      rgba(246,244,239,0.6) 78%,
+      rgba(246,244,239,0.3) 88%,
+      rgba(246,244,239,0) 100%  /* Full transparent di atas */
     );
-    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    padding: 2.5rem 1.25rem 1.25rem 1.25rem; /* More padding top untuk gambar masuk */
     border-radius: 0 0 var(--r) var(--r);
   }
 }
@@ -1214,7 +1247,7 @@ ul,ol { list-style:none; }
 
 @media (max-width: 1023px) {
   .stepper__placeholder {
-    min-height: 280px; /* Match visual height */
+    min-height: 320px; /* Match visual height */
     width: 100%;
     border-radius: var(--r) var(--r) 0 0; /* Round top only */
   }
