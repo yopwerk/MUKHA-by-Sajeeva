@@ -542,7 +542,22 @@ ul,ol { list-style:none; }
   padding-top: 2rem;
   border-top: 1px solid rgba(246,244,239,.12);
 }
+
+@media (max-width: 768px) {
+  .hero__metrics {
+    gap: clamp(1rem, 3vw, 1.5rem);
+    padding-top: 1.5rem;
+  }
+}
+
 .hero__metric { display: flex; flex-direction: column; gap: 2px; }
+
+@media (max-width: 768px) {
+  .hero__metric {
+    gap: 1px;
+  }
+}
+
 .hero__metric-num {
   font-family: var(--f-cal);
   font-size: clamp(1.75rem,3vw,2.25rem);
@@ -553,7 +568,21 @@ ul,ol { list-style:none; }
   align-items: baseline;
   gap: .1em;
 }
+
+@media (max-width: 768px) {
+  .hero__metric-num {
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+  }
+}
+
 .hero__metric-unit { font-size: 1rem; opacity: .6; }
+
+@media (max-width: 768px) {
+  .hero__metric-unit {
+    font-size: 0.875rem;
+  }
+}
+
 .hero__metric-label {
   font-size: .625rem;
   font-weight: 500;
@@ -561,7 +590,21 @@ ul,ol { list-style:none; }
   text-transform: uppercase;
   color: rgba(246,244,239,.45);
 }
+
+@media (max-width: 768px) {
+  .hero__metric-label {
+    font-size: 0.5625rem;
+    letter-spacing: .08em;
+  }
+}
+
 .hero__metric-sep { width:1px; height:2.5rem; background: rgba(246,244,239,.12); flex-shrink:0; }
+
+@media (max-width: 768px) {
+  .hero__metric-sep {
+    height: 2rem;
+  }
+}
 
 /* Scroll indicator */
 .hero__scroll {
