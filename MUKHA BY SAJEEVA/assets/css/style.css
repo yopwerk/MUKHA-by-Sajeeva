@@ -273,7 +273,7 @@ ul,ol { list-style:none; }
   align-items: center;
   gap: 2.5rem;
 }
-@media (min-width:768px) { .nav__links { display:flex; } }
+@media (min-width:1024px) { .nav__links { display:flex; } }
 
 .nav__link {
   font-size: .8125rem;
@@ -319,6 +319,7 @@ ul,ol { list-style:none; }
   backdrop-filter: blur(8px);
   transition: background .2s, border-color .2s;
 }
+@media (max-width:1023px) { .nav__cta { display: none; } }
 .nav__cta:hover { background: rgba(255,255,255,.22); }
 .nav--scrolled .nav__cta,
 .nav--light .nav__cta {
@@ -340,7 +341,7 @@ ul,ol { list-style:none; }
   min-width: 44px; min-height: 44px;
   align-items: center; justify-content: center;
 }
-@media (min-width:768px) { .nav__burger { display:none; } }
+@media (min-width:1024px) { .nav__burger { display:none; } }
 .nav__burger span {
   display: block;
   width: 22px; height: 1.5px;
@@ -489,6 +490,10 @@ ul,ol { list-style:none; }
 
 .hero__body { max-width: min(960px, 92vw); }
 
+@media (min-width: 768px) and (max-width: 1194px) {
+  .hero__body { max-width: min(1100px, 94vw); }
+}
+
 /* Cal Sans headline — 4 lines on desktop, scales naturally on mobile */
 .hero__statement {
   font-family: var(--f-cal);
@@ -502,6 +507,13 @@ ul,ol { list-style:none; }
   white-space: normal;
   word-break: normal;
   overflow-wrap: break-word;
+}
+
+/* iPad Pro range (portrait 1024px, landscape 1194px): bigger headline 70–80% viewport */
+@media (min-width: 768px) and (max-width: 1194px) {
+  .hero__statement {
+    font-size: clamp(3rem, 6.5vw, 5.5rem);
+  }
 }
 .hero__statement em {
   font-style: normal;
