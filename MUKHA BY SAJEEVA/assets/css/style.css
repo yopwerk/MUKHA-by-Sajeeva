@@ -581,15 +581,13 @@ ul,ol { list-style:none; }
   }
 }
 
-/* Add symbols on desktop via CSS */
-@media (min-width: 769px) {
-  .hero__metric:nth-child(1) .hero__metric-num::after {
-    content: '+';
-  }
-  
-  .hero__metric:nth-child(5) .hero__metric-num::after {
-    content: '%';
-  }
+/* Add symbols via CSS */
+.hero__metric:nth-child(1) .hero__metric-num::after {
+  content: '+';
+}
+
+.hero__metric:nth-child(5) .hero__metric-num::after {
+  content: '%';
 }
 
 .hero__metric-unit { font-size: 1rem; opacity: .6; }
