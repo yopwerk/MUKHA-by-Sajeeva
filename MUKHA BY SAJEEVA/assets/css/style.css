@@ -588,8 +588,7 @@ ul,ol { list-style:none; }
 
 @media (max-width: 768px) {
   .hero__metric-unit {
-    font-size: 0.875rem;
-    display: inline;
+    display: none;
   }
 }
 
