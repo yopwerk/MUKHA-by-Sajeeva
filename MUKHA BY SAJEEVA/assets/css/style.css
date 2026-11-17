@@ -1905,8 +1905,10 @@ body.lang-switching [data-en] {
 }
 
 .footer__social-link svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 @media (max-width: 768px) {
