@@ -818,7 +818,11 @@ ul,ol { list-style:none; }
   .matrix__card:nth-child(2) { border-bottom: 1px solid var(--hair); }
 }
 @media (max-width:599px) {
-  .matrix__card { border-right:none; border-bottom: 1px solid var(--hair); }
+  .matrix__card { 
+    border-right:none; 
+    border-bottom: 1px solid var(--hair);
+    min-height: 320px; /* Slightly taller for scroll experience */
+  }
   .matrix__card:last-child { border-bottom:none; }
 }
 
@@ -1853,6 +1857,10 @@ body.modal-open { overflow:hidden; }
 
 /* Mobile swipe-to-open state */
 @media (max-width:767px) {
+  .matrix__card {
+    transition: transform .5s var(--ease), opacity .5s var(--ease);
+  }
+  
   .matrix__card--active .matrix__front {
     opacity: 0;
     transform: translateY(-16px);
@@ -1860,6 +1868,16 @@ body.modal-open { overflow:hidden; }
   .matrix__card--active .matrix__back {
     opacity: 1;
     transform: translateY(0);
+  }
+  
+  /* Cards that are NOT active fade slightly */
+  .matrix__card:not(.matrix__card--active) .matrix__front {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .matrix__card:not(.matrix__card--active) .matrix__back {
+    opacity: 0;
+    transform: translateY(20px);
   }
 }
 

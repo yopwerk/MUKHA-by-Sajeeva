@@ -603,44 +603,61 @@
   if (ppCloseBtn) ppCloseBtn.addEventListener('click',  closePP);
   if (ppModal)    ppModal.addEventListener('click', function (e) { if (e.target === ppModal) closePP(); });
 
-  /* ── 18 · MATRIX CARDS — SWIPE TO AUTO-OPEN ON MOBILE ── */
+  /* ── 18 · MATRIX CARDS — SCROLL-TRIGGERED AUTO-EXPAND ON MOBILE ── */
   var mCards = $$('.matrix__card');
-  var touchStartX = 0;
-  var touchStartTime = 0;
-  var swipeThreshold = 30;  // px
-  var swipeTimeThreshold = 300;  // ms
+  var mScrollTick = false;
   
-  mCards.forEach(function (card) {
-    var touchStartX = 0;
-    var touchStartTime = 0;
+  function updateMatrixCards() {
+    if (window.innerWidth >= 768) return; // Desktop only uses hover
     
-    card.addEventListener('touchstart', function (e) {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartTime = Date.now();
-    }, { passive: true });
+    var viewportCenter = window.innerHeight / 2;
+    var closestCard = null;
+    var minDistance = Infinity;
     
-    card.addEventListener('touchend', function (e) {
-      var touchEndX = e.changedTouches[0].screenX;
-      var touchDuration = Date.now() - touchStartTime;
-      var swipeDistance = Math.abs(touchEndX - touchStartX);
+    // Find the card closest to viewport center
+    mCards.forEach(function (card) {
+      var rect = card.getBoundingClientRect();
+      var cardCenter = rect.top + (rect.height / 2);
+      var distance = Math.abs(cardCenter - viewportCenter);
       
-      // Swipe detected: distance > threshold AND duration < time threshold (quick swipe)
-      if (swipeDistance > swipeThreshold && touchDuration < swipeTimeThreshold) {
-        card.classList.toggle('matrix__card--active');
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestCard = card;
       }
+    });
+    
+    // Activate only the closest card (within 120px of center)
+    mCards.forEach(function (card) {
+      if (card === closestCard && minDistance < 120) {
+        card.classList.add('matrix__card--active');
+      } else {
+        card.classList.remove('matrix__card--active');
+      }
+    });
+    
+    mScrollTick = false;
+  }
+  
+  // Throttled scroll handler for mobile
+  if (window.innerWidth < 768) {
+    window.addEventListener('scroll', function () {
+      if (mScrollTick) return;
+      mScrollTick = true;
+      requestAnimationFrame(updateMatrixCards);
     }, { passive: true });
     
-    // On desktop or if no swipe detected, allow click to toggle
-    card.addEventListener('click', function (e) {
-      // Only on desktop (hover:hover capability)
-      if (window.matchMedia('(hover:hover)').matches) {
-        // Don't toggle on desktop, let :hover handle it
-        return;
-      }
-      // On mobile without swipe, allow click to toggle (fallback)
-      card.classList.toggle('matrix__card--active');
+    // Initial check on load
+    setTimeout(updateMatrixCards, 500);
+  }
+  
+  // Desktop: allow click to toggle (fallback)
+  if (window.matchMedia('(hover:hover)').matches) {
+    mCards.forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        // Desktop uses :hover, no toggle needed
+      });
     });
-  });
+  }
 
   /* ── 19 · SMOOTH SCROLL ────────────────────────────── */
   var NAV_H = 76;
