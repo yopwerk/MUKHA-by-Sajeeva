@@ -353,7 +353,10 @@
   var sPrev   = $('s-prev');
   var sNext   = $('s-next');
   var sLabel  = $('s-label');
+  var sDots   = $$('.stepper__dot');
   var sIdx    = 0;
+  var sAutoTimer = null;
+  var sIsMobile = function() { return window.innerWidth < 1024; };
 
   function goStep(n) {
     sIdx = Math.max(0, Math.min(n, sTabs.length - 1));
@@ -362,9 +365,26 @@
       t.setAttribute('aria-selected', String(i === sIdx));
     });
     sPanels.forEach(function (p, i) { p.hidden = i !== sIdx; });
+    sDots.forEach(function (d, i) {
+      d.classList.toggle('stepper__dot--active', i === sIdx);
+      d.setAttribute('aria-current', String(i === sIdx));
+    });
     if (sPrev)  sPrev.disabled  = sIdx === 0;
     if (sNext)  sNext.disabled  = sIdx === sTabs.length - 1;
     if (sLabel) sLabel.textContent = '0' + (sIdx + 1) + ' / 0' + sTabs.length;
+    
+    // Reset auto-carousel timer on manual interaction
+    if (sIsMobile()) {
+      clearTimeout(sAutoTimer);
+      sAutoTimer = setTimeout(autoNextSlide, 4000);
+    }
+  }
+
+  function autoNextSlide() {
+    if (sIsMobile()) {
+      var nextIdx = (sIdx + 1) % sTabs.length;
+      goStep(nextIdx);
+    }
   }
   sTabs.forEach(function (t, i) {
     t.addEventListener('click', function () { goStep(i); });
@@ -373,9 +393,27 @@
       if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); goStep(i - 1); (sTabs[Math.max(i - 1, 0)] || t).focus(); }
     });
   });
+  sDots.forEach(function (d, i) {
+    d.addEventListener('click', function () { goStep(i); });
+  });
   if (sPrev) sPrev.addEventListener('click', function () { goStep(sIdx - 1); });
   if (sNext) sNext.addEventListener('click', function () { goStep(sIdx + 1); });
   goStep(0);
+  
+  // Start auto-carousel on mobile
+  if (sIsMobile()) {
+    sAutoTimer = setTimeout(autoNextSlide, 4000);
+  }
+  
+  // Handle window resize to start/stop carousel
+  window.addEventListener('resize', function () {
+    if (!sIsMobile() && sAutoTimer) {
+      clearTimeout(sAutoTimer);
+      sAutoTimer = null;
+    } else if (sIsMobile() && !sAutoTimer) {
+      sAutoTimer = setTimeout(autoNextSlide, 4000);
+    }
+  });
 
   /* ── 13 · STYLE TABS ───────────────────────────────── */
   var stPills  = $$('.style-pill');
