@@ -191,11 +191,7 @@
 
   /* ── 06 · COUNTERS ─────────────────────────────────── */
   function animCount(el) {
-    var isMobile = window.innerWidth < 768;
-    var target = isMobile ? el.getAttribute('data-count-mobile') : el.getAttribute('data-count');
-    // Parse target, handle HTML entities
-    target = target.replace('&plus;', '').replace('&percnt;', '').trim();
-    target = parseInt(target, 10);
+    var target = parseInt(el.getAttribute('data-count'), 10);
     var dur = 1600, start = null;
     function step(ts) {
       if (!start) start = ts;
@@ -203,14 +199,7 @@
       var e = 1 - Math.pow(1 - p, 4);
       el.textContent = Math.round(e * target);
       if (p < 1) requestAnimationFrame(step);
-      else {
-        el.textContent = target;
-        // Add back the symbol on desktop
-        if (!isMobile) {
-          if (el.getAttribute('data-count').indexOf('&plus;') !== -1) el.textContent += '+';
-          if (el.getAttribute('data-count').indexOf('&percnt;') !== -1) el.textContent += '%';
-        }
-      }
+      else el.textContent = target;
     }
     requestAnimationFrame(step);
   }

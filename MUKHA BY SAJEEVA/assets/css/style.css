@@ -578,9 +578,17 @@ ul,ol { list-style:none; }
 @media (max-width: 768px) {
   .hero__metric-num {
     font-size: clamp(1.5rem, 2.5vw, 1.75rem);
-    flex-direction: row;
-    display: flex;
-    align-items: baseline;
+  }
+}
+
+/* Add symbols on desktop via CSS */
+@media (min-width: 769px) {
+  .hero__metric:nth-child(1) .hero__metric-num::after {
+    content: '+';
+  }
+  
+  .hero__metric:nth-child(5) .hero__metric-num::after {
+    content: '%';
   }
 }
 
