@@ -603,7 +603,40 @@
   if (ppCloseBtn) ppCloseBtn.addEventListener('click',  closePP);
   if (ppModal)    ppModal.addEventListener('click', function (e) { if (e.target === ppModal) closePP(); });
 
-  /* ── 18 · SMOOTH SCROLL ────────────────────────────── */
+  /* ── 18 · MATRIX CARDS — SWIPE-TO-EXPAND ON MOBILE ── */
+  if (window.innerWidth < 768) {
+    var mCards = $$('.matrix__card');
+    var cardContainer = $q('.matrix__grid');
+    if (cardContainer && mCards.length > 0) {
+      function checkCardCenter() {
+        var containerCenter = cardContainer.getBoundingClientRect().left + cardContainer.offsetWidth / 2;
+        mCards.forEach(function (card) {
+          var cardRect = card.getBoundingClientRect();
+          var cardCenter = cardRect.left + cardRect.width / 2;
+          var distFromCenter = Math.abs(cardCenter - containerCenter);
+          var maxDist = window.innerWidth * 0.15; // 15% tolerance
+          var isNearCenter = distFromCenter < maxDist;
+          
+          if (isNearCenter) {
+            card.classList.add('matrix__card--active');
+            card.focus();
+          } else {
+            card.classList.remove('matrix__card--active');
+            card.blur();
+          }
+        });
+      }
+      
+      // Check on scroll
+      window.addEventListener('scroll', checkCardCenter, { passive: true });
+      window.addEventListener('resize', checkCardCenter, { passive: true });
+      
+      // Initial check
+      checkCardCenter();
+    }
+  }
+
+  /* ── 19 · SMOOTH SCROLL ────────────────────────────── */
   var NAV_H = 76;
   $$('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
