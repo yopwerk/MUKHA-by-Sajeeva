@@ -1308,17 +1308,17 @@ ul,ol { list-style:none; }
 }
 
 .footer__brand {
-  flex: 0 1 60%;
+  flex: 0 1 70%;
   align-self: flex-start;
 }
 
 .footer__nav {
-  flex: 0 1 20%;
+  flex: 0 1 15%;
   align-self: flex-start;
 }
 
 .footer__social {
-  flex: 0 1 20%;
+  flex: 0 1 15%;
   align-self: flex-start;
 }
 .footer__mark {
