@@ -861,19 +861,6 @@ ul,ol { list-style:none; }
   transform: translateY(0);
 }
 
-/* Mobile auto-expand when card is centered during scroll */
-@media (max-width: 768px) {
-  .matrix__card--active .matrix__front {
-    opacity: 0;
-    transform: translateY(-16px);
-  }
-  
-  .matrix__card--active .matrix__back {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .matrix__num {
   font-family: var(--f-sans);
   font-size: .75rem;
