@@ -413,9 +413,22 @@ ul,ol { list-style:none; }
   background-size: cover;
   background-position: center 60%;
   transform: scale(1.04);
+  opacity: 0;
+  animation: heroImageFadeIn 1.2s ease-out 0.3s forwards;
   transition: transform 8s ease-out;
 }
 .hero__bg-img.is-loaded { transform: scale(1); }
+
+@keyframes heroImageFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
 .hero__bg-overlay {
   position: absolute;
   inset: 0;
