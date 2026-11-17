@@ -1205,8 +1205,8 @@ ul,ol { list-style:none; }
   .stepper__visual {
     order: -1;
     width: 100%;
-    min-height: 320px; /* Taller untuk gambar lebih dalam */
-    margin-bottom: -120px; /* Overlap lebih banyak - gambar masuk ke content */
+    min-height: 360px; /* Lebih tall lagi */
+    margin-bottom: -160px; /* Overlap jauh lebih dalam */
     z-index: 1;
   }
   
@@ -1216,13 +1216,13 @@ ul,ol { list-style:none; }
     background: linear-gradient(
       to top,
       var(--bg) 0%,
-      var(--bg) 50%,
-      rgba(246,244,239,0.9) 65%,
-      rgba(246,244,239,0.6) 78%,
-      rgba(246,244,239,0.3) 88%,
-      rgba(246,244,239,0) 100%  /* Full transparent di atas */
+      var(--bg) 45%,
+      rgba(246,244,239,0.85) 55%,
+      rgba(246,244,239,0.5) 65%,
+      rgba(246,244,239,0.2) 75%,
+      rgba(246,244,239,0) 82%  /* Full transparent lebih cepat */
     );
-    padding: 2.5rem 1.25rem 1.25rem 1.25rem; /* More padding top untuk gambar masuk */
+    padding: 3rem 1.25rem 1.25rem 1.25rem; /* Extra padding top untuk gambar yang turun */
     border-radius: 0 0 var(--r) var(--r);
   }
 }
@@ -1247,7 +1247,7 @@ ul,ol { list-style:none; }
 
 @media (max-width: 1023px) {
   .stepper__placeholder {
-    min-height: 320px; /* Match visual height */
+    min-height: 360px; /* Match visual height */
     width: 100%;
     border-radius: var(--r) var(--r) 0 0; /* Round top only */
   }
