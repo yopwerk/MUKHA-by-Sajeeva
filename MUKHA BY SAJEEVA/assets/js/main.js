@@ -603,7 +603,46 @@
   if (ppCloseBtn) ppCloseBtn.addEventListener('click',  closePP);
   if (ppModal)    ppModal.addEventListener('click', function (e) { if (e.target === ppModal) closePP(); });
 
-  /* ── 18 · SMOOTH SCROLL ────────────────────────────── */
+  /* ── 18 · MATRIX CARDS — SWIPE TO AUTO-OPEN ON MOBILE ── */
+  var mCards = $$('.matrix__card');
+  var touchStartX = 0;
+  var touchStartTime = 0;
+  var swipeThreshold = 30;  // px
+  var swipeTimeThreshold = 300;  // ms
+  
+  mCards.forEach(function (card) {
+    var touchStartX = 0;
+    var touchStartTime = 0;
+    
+    card.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartTime = Date.now();
+    }, { passive: true });
+    
+    card.addEventListener('touchend', function (e) {
+      var touchEndX = e.changedTouches[0].screenX;
+      var touchDuration = Date.now() - touchStartTime;
+      var swipeDistance = Math.abs(touchEndX - touchStartX);
+      
+      // Swipe detected: distance > threshold AND duration < time threshold (quick swipe)
+      if (swipeDistance > swipeThreshold && touchDuration < swipeTimeThreshold) {
+        card.classList.toggle('matrix__card--active');
+      }
+    }, { passive: true });
+    
+    // On desktop or if no swipe detected, allow click to toggle
+    card.addEventListener('click', function (e) {
+      // Only on desktop (hover:hover capability)
+      if (window.matchMedia('(hover:hover)').matches) {
+        // Don't toggle on desktop, let :hover handle it
+        return;
+      }
+      // On mobile without swipe, allow click to toggle (fallback)
+      card.classList.toggle('matrix__card--active');
+    });
+  });
+
+  /* ── 19 · SMOOTH SCROLL ────────────────────────────── */
   var NAV_H = 76;
   $$('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
