@@ -545,7 +545,9 @@ ul,ol { list-style:none; }
 
 @media (max-width: 768px) {
   .hero__metrics {
-    gap: clamp(1rem, 3vw, 1.5rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
     padding-top: 1.5rem;
   }
 }
@@ -554,10 +556,12 @@ ul,ol { list-style:none; }
 
 @media (max-width: 768px) {
   .hero__metric {
-    gap: 1px;
-    flex-direction: row;
-    align-items: baseline;
     gap: 0.5rem;
+    flex-direction: column;
+  }
+  
+  .hero__metric:last-child {
+    grid-column: 1 / -1;
   }
 }
 
@@ -576,7 +580,6 @@ ul,ol { list-style:none; }
 @media (max-width: 768px) {
   .hero__metric-num {
     font-size: clamp(1.5rem, 2.5vw, 1.75rem);
-    flex-shrink: 0;
   }
 }
 
@@ -600,7 +603,7 @@ ul,ol { list-style:none; }
   .hero__metric-label {
     font-size: 0.5625rem;
     letter-spacing: .08em;
-    display: none;
+    display: block;
   }
 }
 
