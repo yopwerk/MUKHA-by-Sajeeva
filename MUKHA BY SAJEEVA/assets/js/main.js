@@ -191,7 +191,9 @@
 
   /* ── 06 · COUNTERS ─────────────────────────────────── */
   function animCount(el) {
-    var target = parseInt(el.getAttribute('data-count'), 10);
+    var isMobile = window.innerWidth < 768;
+    var target = isMobile ? el.getAttribute('data-count-mobile') : el.getAttribute('data-count');
+    target = parseInt(target, 10);
     var dur = 1600, start = null;
     function step(ts) {
       if (!start) start = ts;
