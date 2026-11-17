@@ -399,6 +399,23 @@
     var panelWidth = panels.scrollWidth / sTabs.length;
     panels.scrollLeft = panelWidth * idx;
   }
+  
+  // Add smooth nudge animation to hint swipeable content
+  function nudgeSlide() {
+    var panels = $q('.stepper__panels');
+    if (!panels || !sIsMobile()) return;
+    
+    // Subtle slide to right and back to hint swipe capability
+    var originalScroll = panels.scrollLeft;
+    panels.style.scrollBehavior = 'smooth';
+    
+    setTimeout(function() {
+      panels.scrollLeft = originalScroll + 40; // Nudge 40px right
+      setTimeout(function() {
+        panels.scrollLeft = originalScroll; // Back to original
+      }, 800);
+    }, 1000);
+  }
   sTabs.forEach(function (t, i) {
     t.addEventListener('click', function () { goStep(i); });
     t.addEventListener('keydown', function (e) {
@@ -413,9 +430,24 @@
   if (sNext) sNext.addEventListener('click', function () { goStep(sIdx + 1); });
   goStep(0);
   
-  // Start auto-carousel on mobile
+  // Start auto-carousel on mobile with nudge hint when section visible
   if (sIsMobile()) {
-    sAutoTimer = setTimeout(autoNextSlide, 4000);
+    var processSec = $q('#proses');
+    if (processSec && 'IntersectionObserver' in window) {
+      var stepperIO = new IntersectionObserver(function(entries) {
+        entries.forEach(function(en) {
+          if (en.isIntersecting && !sAutoTimer) {
+            nudgeSlide(); // Initial nudge hint
+            sAutoTimer = setTimeout(autoNextSlide, 4000);
+            stepperIO.unobserve(processSec);
+          }
+        });
+      }, { threshold: 0.3 });
+      stepperIO.observe(processSec);
+    } else {
+      nudgeSlide();
+      sAutoTimer = setTimeout(autoNextSlide, 4000);
+    }
   }
   
   // Handle window resize to start/stop carousel
