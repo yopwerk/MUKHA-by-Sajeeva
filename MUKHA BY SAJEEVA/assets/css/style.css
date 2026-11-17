@@ -1925,6 +1925,38 @@ body.lang-switching [data-en] {
 }
 
 @media (max-width: 768px) {
+  .footer__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: stretch;
+    margin-bottom: 2rem;
+  }
+
+  .footer__brand {
+    flex: 0 1 auto;
+    width: 100%;
+  }
+
+  .footer__nav {
+    flex: 0 1 auto;
+    width: 100%;
+  }
+
+  .footer__social {
+    flex: 0 1 auto;
+    width: 100%;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .footer__social-links {
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+  }
+
   .footer__social {
     margin-top: 2rem;
     padding-top: 2rem;
