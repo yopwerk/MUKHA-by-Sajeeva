@@ -545,10 +545,11 @@ ul,ol { list-style:none; }
 
 @media (max-width: 768px) {
   .hero__metrics {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
     padding-top: 1.5rem;
+    justify-content: space-between;
   }
 }
 
@@ -557,11 +558,8 @@ ul,ol { list-style:none; }
 @media (max-width: 768px) {
   .hero__metric {
     gap: 0.5rem;
-    flex-direction: column;
-  }
-  
-  .hero__metric:last-child {
-    grid-column: 1 / -1;
+    flex: 1;
+    min-width: 0;
   }
 }
 
