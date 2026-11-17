@@ -578,6 +578,9 @@ ul,ol { list-style:none; }
 @media (max-width: 768px) {
   .hero__metric-num {
     font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+    flex-direction: row;
+    display: flex;
+    align-items: baseline;
   }
 }
 
@@ -586,6 +589,7 @@ ul,ol { list-style:none; }
 @media (max-width: 768px) {
   .hero__metric-unit {
     font-size: 0.875rem;
+    display: inline;
   }
 }
 
