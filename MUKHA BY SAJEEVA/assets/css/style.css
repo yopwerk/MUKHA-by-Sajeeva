@@ -1041,8 +1041,11 @@ ul,ol { list-style:none; }
 
 @media (min-width:1024px) { 
   .stepper__panel { 
-    grid-template-columns:1fr 1fr; 
-    align-items:start; 
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 2rem;
+    align-items: start;
+    animation: panelIn .4s var(--ease-out) both;
   } 
 }
 
@@ -1093,14 +1096,19 @@ ul,ol { list-style:none; }
   margin-top: .55em;
 }
 .stepper__visual { 
-  display: flex; 
-  order: -1;
+  display: flex;
 }
 
 @media (max-width: 1023px) {
   .stepper__visual {
     order: -1;
     width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stepper__visual {
+    order: 1;
   }
 }
 .stepper__placeholder {
