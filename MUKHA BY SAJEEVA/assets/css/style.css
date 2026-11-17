@@ -857,6 +857,7 @@ ul,ol { list-style:none; }
   .stepper {
     display: flex;
     flex-direction: column;
+    gap: 0;
   }
 }
 @media (min-width:1024px) { 
@@ -879,10 +880,7 @@ ul,ol { list-style:none; }
 
 @media (max-width: 1023px) {
   .stepper__nav {
-    position: relative;
-    overflow-x: visible;
-    overflow: visible;
-    scrollbar-width: visible;
+    display: none;
   }
 }
 
@@ -991,13 +989,63 @@ ul,ol { list-style:none; }
 }
 
 .stepper__panels { min-height:320px; }
+
+@media (max-width: 1023px) {
+  .stepper__panels {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    gap: 0;
+    min-height: auto;
+    margin-bottom: 1.5rem;
+  }
+  .stepper__panels::-webkit-scrollbar { display: none; }
+}
+
+@media (min-width: 1024px) {
+  .stepper__panels { min-height:320px; }
+}
 .stepper__panel {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
   animation: panelIn .4s var(--ease-out) both;
 }
-@media (min-width:768px) { .stepper__panel { grid-template-columns:1fr 1fr; align-items:start; } }
+
+@media (max-width: 1023px) {
+  .stepper__panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex-shrink: 0;
+    width: 100%;
+    scroll-snap-align: start;
+    animation: none;
+    padding: 0 var(--pad);
+  }
+  
+  /* Show hint of next slide */
+  .stepper__panel:not(:last-child) {
+    width: calc(100% - var(--pad));
+  }
+}
+
+@media (min-width:768px) and (max-width: 1023px) { 
+  .stepper__panel { 
+    grid-template-columns:1fr 1fr; 
+    align-items:start; 
+  } 
+}
+
+@media (min-width:1024px) { 
+  .stepper__panel { 
+    grid-template-columns:1fr 1fr; 
+    align-items:start; 
+  } 
+}
+
 @keyframes panelIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
 
 .stepper__count {
@@ -1044,7 +1092,17 @@ ul,ol { list-style:none; }
   background: var(--olive);
   margin-top: .55em;
 }
-.stepper__visual { display:flex; }
+.stepper__visual { 
+  display: flex; 
+  order: -1;
+}
+
+@media (max-width: 1023px) {
+  .stepper__visual {
+    order: -1;
+    width: 100%;
+  }
+}
 .stepper__placeholder {
   flex:1;
   min-height:260px;
@@ -1056,6 +1114,13 @@ ul,ol { list-style:none; }
   justify-content: center;
   overflow: hidden;
   position: relative;
+}
+
+@media (max-width: 1023px) {
+  .stepper__placeholder {
+    min-height: 200px;
+    width: 100%;
+  }
 }
 .stepper__placeholder img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .stepper__placeholder span {

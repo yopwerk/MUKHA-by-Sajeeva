@@ -373,6 +373,11 @@
     if (sNext)  sNext.disabled  = sIdx === sTabs.length - 1;
     if (sLabel) sLabel.textContent = '0' + (sIdx + 1) + ' / 0' + sTabs.length;
     
+    // Mobile: scroll carousel to current slide
+    if (sIsMobile()) {
+      scrollToSlide(sIdx);
+    }
+    
     // Reset auto-carousel timer on manual interaction
     if (sIsMobile()) {
       clearTimeout(sAutoTimer);
@@ -384,7 +389,15 @@
     if (sIsMobile()) {
       var nextIdx = (sIdx + 1) % sTabs.length;
       goStep(nextIdx);
+      scrollToSlide(nextIdx);
     }
+  }
+
+  function scrollToSlide(idx) {
+    var panels = $q('.stepper__panels');
+    if (!panels) return;
+    var panelWidth = panels.scrollWidth / sTabs.length;
+    panels.scrollLeft = panelWidth * idx;
   }
   sTabs.forEach(function (t, i) {
     t.addEventListener('click', function () { goStep(i); });
