@@ -90,43 +90,42 @@
   function applyLang(lang) {
     var key = lang === 'en' ? 'en' : 'id';
 
-    /* Get ALL elements with that language's attribute.
-       Process ONLY if:
-       1. No parent has data-en/data-id (skip if inside another translatable)
-       2. If has children with data-en/data-id, process this level only if
-          those children are direct targets (don't double-process) */
+    /* Simple: process EVERY element with data-en or data-id attribute
+       Update its textContent directly */
     $$('[data-' + key + ']').forEach(function (el) {
-      /* Skip if any parent also has data-en/data-id */
-      var ancestor = el.parentElement;
-      var hasParentWithAttr = false;
-      while (ancestor && ancestor !== document.body) {
-        if (ancestor.getAttribute('data-' + key)) { hasParentWithAttr = true; break; }
-        ancestor = ancestor.parentElement;
-      }
-      if (hasParentWithAttr) return;
-
       var val = el.getAttribute('data-' + key);
       if (!val) return;
 
-      /* Swap the text */
+      /* Priority: if element has .split-word-inner, update that */
       var inner = el.querySelector('.split-word-inner');
       if (inner) {
         inner.textContent = val;
-      } else if (el.children.length === 0) {
+        return;
+      }
+
+      /* If NO children, just set textContent */
+      if (el.children.length === 0) {
         el.textContent = val;
-      } else {
-        /* Has children: try to find direct child with data attr to update */
-        var childWithAttr = el.querySelector('[data-' + key + ']');
-        if (childWithAttr && childWithAttr.parentElement === el) {
-          /* Direct child has attribute, skip parent (let child handle) */
-          return;
+        return;
+      }
+
+      /* Has children (mixed content): try to update direct text nodes only */
+      var foundText = false;
+      var nodes = el.childNodes;
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].nodeType === 3 && nodes[i].textContent.trim()) {
+          nodes[i].textContent = val + ' ';
+          foundText = true;
+          break;
         }
-        
-        /* Mixed content: update first text node only */
-        var nodes = el.childNodes;
-        for (var i = 0; i < nodes.length; i++) {
-          if (nodes[i].nodeType === 3 && nodes[i].textContent.trim()) {
-            nodes[i].textContent = val + ' ';
+      }
+
+      /* If no text node found in direct children, look for direct child with text */
+      if (!foundText) {
+        for (var i = 0; i < el.children.length; i++) {
+          var child = el.children[i];
+          if (child.children.length === 0 && child.textContent.trim()) {
+            child.textContent = val;
             break;
           }
         }
