@@ -676,7 +676,7 @@ ul,ol { list-style:none; }
 .ba { border-radius: var(--r); overflow: hidden; border: 1px solid var(--hair); margin-bottom: 1.25rem; user-select: none; }
 .ba__track {
   position: relative;
-  height: clamp(240px,38vw,520px);
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   cursor: col-resize;
 }
