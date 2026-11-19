@@ -93,7 +93,8 @@
     /* Get ALL elements with that language's attribute.
        Process ONLY if:
        1. No parent has data-en/data-id (skip if inside another translatable)
-       2. No child has data-en/data-id (skip if parent, let children handle it) */
+       2. If has children with data-en/data-id, process this level only if
+          those children are direct targets (don't double-process) */
     $$('[data-' + key + ']').forEach(function (el) {
       /* Skip if any parent also has data-en/data-id */
       var ancestor = el.parentElement;
@@ -103,9 +104,6 @@
         ancestor = ancestor.parentElement;
       }
       if (hasParentWithAttr) return;
-
-      /* Skip if any child has data-en or data-id (parent level, let children process) */
-      if (el.querySelector('[data-en], [data-id]')) return;
 
       var val = el.getAttribute('data-' + key);
       if (!val) return;
@@ -117,6 +115,13 @@
       } else if (el.children.length === 0) {
         el.textContent = val;
       } else {
+        /* Has children: try to find direct child with data attr to update */
+        var childWithAttr = el.querySelector('[data-' + key + ']');
+        if (childWithAttr && childWithAttr.parentElement === el) {
+          /* Direct child has attribute, skip parent (let child handle) */
+          return;
+        }
+        
         /* Mixed content: update first text node only */
         var nodes = el.childNodes;
         for (var i = 0; i < nodes.length; i++) {
