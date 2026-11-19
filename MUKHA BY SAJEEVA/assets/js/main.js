@@ -91,17 +91,21 @@
     var key = lang === 'en' ? 'en' : 'id';
 
     /* Get ALL elements with that language's attribute.
-       Process ONLY deepest elements (those whose ancestors don't also have data-en)
-       to avoid double-swapping parent+child */
+       Process ONLY if:
+       1. No parent has data-en/data-id (skip if inside another translatable)
+       2. No child has data-en/data-id (skip if parent, let children handle it) */
     $$('[data-' + key + ']').forEach(function (el) {
-      /* Skip if any ancestor also has data-en/data-id — let deepest win */
+      /* Skip if any parent also has data-en/data-id */
       var ancestor = el.parentElement;
-      var skip = false;
+      var hasParentWithAttr = false;
       while (ancestor && ancestor !== document.body) {
-        if (ancestor.getAttribute('data-' + key)) { skip = true; break; }
+        if (ancestor.getAttribute('data-' + key)) { hasParentWithAttr = true; break; }
         ancestor = ancestor.parentElement;
       }
-      if (skip) return;
+      if (hasParentWithAttr) return;
+
+      /* Skip if any child has data-en or data-id (parent level, let children process) */
+      if (el.querySelector('[data-en], [data-id]')) return;
 
       var val = el.getAttribute('data-' + key);
       if (!val) return;
