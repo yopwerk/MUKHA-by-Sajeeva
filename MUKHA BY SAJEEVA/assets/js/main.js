@@ -503,7 +503,240 @@
     });
   });
 
-  /* ── 15 · FORM ─────────────────────────────────────── */
+  /* ── 15 · SLOT PICKER — Calendar-based booking UI ─── */
+  (function () {
+    var picker       = $('slot-picker');
+    if (!picker) return;
+
+    var calGrid      = $('cal-grid');
+    var calMonthLbl  = $('cal-month-label');
+    var calPrev      = $('cal-prev');
+    var calNext      = $('cal-next');
+    var calSlots     = $('cal-slots');
+    var calSlotsLbl  = $('cal-slots-label');
+    var calSlotsGrid = $('cal-slots-grid');
+    var calLoading   = $('cal-loading');
+    var calNoAvail   = $('cal-noavail');
+    var calSelected  = $('cal-selected');
+    var calSelLbl    = $('cal-selected-label');
+    var hiddenInput  = $('f-jadwal');
+
+    var today        = new Date();
+    today.setHours(0,0,0,0);
+    var curYear      = today.getFullYear();
+    var curMonth     = today.getMonth();
+    var selectedDate = null;
+    var selectedSlot = null;
+    var busyDates    = [];
+    var slotsCache   = {};
+
+    var MONTHS_ID = ['Januari','Februari','Maret','April','Mei','Juni',
+                     'Juli','Agustus','September','Oktober','November','Desember'];
+    var DAYS_AHEAD = (window.MUKHA_CONFIG || {}).CALENDAR_DAYS_AHEAD || 14;
+
+    // Max date = today + DAYS_AHEAD
+    var maxDate = new Date(today);
+    maxDate.setDate(maxDate.getDate() + DAYS_AHEAD);
+
+    // Format YYYY-MM-DD
+    function toDateStr(d) {
+      var y = d.getFullYear();
+      var m = String(d.getMonth()+1).padStart(2,'0');
+      var dd = String(d.getDate()).padStart(2,'0');
+      return y + '-' + m + '-' + dd;
+    }
+
+    // Load busy dates for visible month range
+    function loadBusyDates() {
+      if (!window.MukhaFormService || !window.MukhaFormService.fetchBusyDates) return;
+      var from = toDateStr(today);
+      var to   = toDateStr(maxDate);
+      window.MukhaFormService.fetchBusyDates(from, to).then(function(dates) {
+        busyDates = dates || [];
+        renderCalendar();
+      });
+    }
+
+    // Render calendar grid
+    function renderCalendar() {
+      calMonthLbl.textContent = MONTHS_ID[curMonth] + ' ' + curYear;
+
+      // First day of month
+      var firstDay = new Date(curYear, curMonth, 1).getDay(); // 0=Sun
+      var daysInMonth = new Date(curYear, curMonth+1, 0).getDate();
+
+      var html = '';
+
+      // Leading empty cells
+      for (var i = 0; i < firstDay; i++) {
+        html += '<div class="slot-picker__day slot-picker__day--other" aria-hidden="true"></div>';
+      }
+
+      // Days
+      for (var d = 1; d <= daysInMonth; d++) {
+        var cellDate = new Date(curYear, curMonth, d);
+        cellDate.setHours(0,0,0,0);
+        var dateStr  = toDateStr(cellDate);
+        var isToday  = cellDate.getTime() === today.getTime();
+        var isPast   = cellDate < today;
+        var isFuture = cellDate > maxDate;
+        var isFull   = busyDates.indexOf(dateStr) !== -1;
+        var isSel    = selectedDate === dateStr;
+        var isWeekend = cellDate.getDay() === 0 || cellDate.getDay() === 6;
+
+        var cls = 'slot-picker__day';
+        if (isToday)  cls += ' slot-picker__day--today';
+        if (isPast || isFuture || isWeekend) cls += ' slot-picker__day--past';
+        if (isFull)   cls += ' slot-picker__day--full';
+        if (isSel)    cls += ' slot-picker__day--selected';
+
+        var disabled = (isPast || isFuture || isFull || isWeekend) ? ' disabled' : '';
+
+        html += '<button type="button" class="' + cls + '"' + disabled +
+                ' data-date="' + dateStr + '" aria-label="' + d + ' ' + MONTHS_ID[curMonth] + '">' +
+                d + '</button>';
+      }
+
+      calGrid.innerHTML = html;
+
+      // Attach click handlers
+      $$('.slot-picker__day:not([disabled]):not(.slot-picker__day--other)', calGrid).forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          selectDate(btn.getAttribute('data-date'));
+        });
+      });
+
+      // Prev/next nav state
+      var firstOfMonth = new Date(curYear, curMonth, 1);
+      calPrev.disabled = firstOfMonth <= today;
+      calNext.disabled = new Date(curYear, curMonth+1, 1) > maxDate;
+    }
+
+    // Helper: querySelectorAll inside parent
+    function $$(sel, parent) {
+      var p = parent || document;
+      return Array.prototype.slice.call(p.querySelectorAll(sel));
+    }
+
+    // Select a date — load slots
+    function selectDate(dateStr) {
+      selectedDate = dateStr;
+      selectedSlot = null;
+      hiddenInput.value = '';
+      calSelected.hidden = true;
+
+      // Update active day styling
+      $$('.slot-picker__day').forEach(function(b) {
+        b.classList.toggle('slot-picker__day--selected', b.getAttribute('data-date') === dateStr);
+      });
+
+      // Show slots area with loading state
+      var parts = dateStr.split('-');
+      var label = parseInt(parts[2]) + ' ' + MONTHS_ID[parseInt(parts[1])-1] + ' ' + parts[0];
+      calSlotsLbl.textContent = 'Slot tersedia — ' + label;
+      calSlots.hidden = false;
+      calSlotsGrid.innerHTML = '';
+      calNoAvail.hidden = true;
+      calLoading.hidden = false;
+
+      // Use cache if available
+      if (slotsCache[dateStr]) {
+        renderSlots(slotsCache[dateStr]);
+        return;
+      }
+
+      // Fetch from server
+      if (window.MukhaFormService && window.MukhaFormService.fetchSlots) {
+        window.MukhaFormService.fetchSlots(dateStr).then(function(slots) {
+          slotsCache[dateStr] = slots;
+          renderSlots(slots);
+        });
+      } else {
+        // No Calendar API configured: show all slots as available
+        calLoading.hidden = true;
+        renderSlots([]);
+      }
+    }
+
+    // Render slot time buttons
+    function renderSlots(slots) {
+      calLoading.hidden = true;
+      calSlotsGrid.innerHTML = '';
+
+      // If no slots from API, show fallback slots
+      if (!slots || slots.length === 0) {
+        var fallbackHours = [9,10,11,13,14,15,16];
+        slots = fallbackHours.map(function(h) {
+          var hStr = String(h).padStart(2,'0');
+          var eStr = String(h+1).padStart(2,'0');
+          // Build ISO time for selected date
+          var parts = selectedDate.split('-');
+          var dt = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]), h, 0, 0);
+          return { isoTime: dt.toISOString(), label: hStr+'.00 – '+eStr+'.00', status: 'available' };
+        });
+      }
+
+      var available = slots.filter(function(s) { return s.status === 'available'; });
+      if (available.length === 0) {
+        calNoAvail.hidden = false;
+        return;
+      }
+
+      slots.forEach(function(slot) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'slot-btn' + (slot.status === 'booked' ? ' slot-btn--booked' : '');
+        btn.textContent = slot.label;
+        btn.disabled = slot.status === 'booked';
+        btn.setAttribute('data-iso', slot.isoTime);
+
+        if (slot.status !== 'booked') {
+          btn.addEventListener('click', function() {
+            selectSlot(slot.isoTime, slot.label);
+            $$('.slot-btn').forEach(function(b) { b.classList.remove('slot-btn--selected'); });
+            btn.classList.add('slot-btn--selected');
+          });
+        }
+
+        calSlotsGrid.appendChild(btn);
+      });
+    }
+
+    // Confirm slot selection
+    function selectSlot(isoTime, label) {
+      selectedSlot = isoTime;
+      hiddenInput.value = isoTime;
+
+      var parts = selectedDate.split('-');
+      var dateLabel = parseInt(parts[2]) + ' ' + MONTHS_ID[parseInt(parts[1])-1] + ' ' + parts[0];
+      calSelLbl.textContent = dateLabel + '  ·  ' + label;
+      calSelected.hidden = false;
+
+      // Clear error state
+      var errEl = $('err-jadwal');
+      if (errEl) { errEl.hidden = true; errEl.textContent = ''; }
+      var grp = $('fg-jadwal');
+      if (grp) grp.classList.remove('form__group--error');
+    }
+
+    // Month navigation
+    calPrev.addEventListener('click', function() {
+      curMonth--;
+      if (curMonth < 0) { curMonth = 11; curYear--; }
+      renderCalendar();
+    });
+    calNext.addEventListener('click', function() {
+      curMonth++;
+      if (curMonth > 11) { curMonth = 0; curYear++; }
+      renderCalendar();
+    });
+
+    // Init
+    renderCalendar();
+    loadBusyDates();
+  })();
+
+  /* ── 16 · FORM ─────────────────────────────────────── */
   var form      = $('consult-form');
   var submitBtn = $('form-submit-btn');
   var netErr    = $('form-net-error');

@@ -30,34 +30,33 @@ window.MUKHA_CONFIG = {
 
   /**
    * URL Google Apps Script Web App deployment.
-   * Kosongkan string ('') selama development; isi setelah deploy.
-   *
+   * Satu endpoint yang sama handle POST (submit) dan GET (slots/busy).
    * @type {string}
    */
   SHEETS_ENDPOINT: 'https://script.google.com/macros/s/AKfycbwc9cYkfniqOIuDLa94cgkp9BCIwyb74URJ4LEgtuZOGYg3sLBmeF46c4ctRnIU92q_eg/exec',
 
   /**
    * Nama sheet (tab) di dalam Google Spreadsheet yang menjadi target.
-   * Harus sama persis (case-sensitive) dengan nama tab di Sheets.
-   *
    * @type {string}
    */
   SHEET_NAME: 'Leads Konsultasi',
 
   /**
    * Timeout permintaan HTTP dalam milidetik.
-   * Naikkan jika koneksi server lambat; turunkan untuk UX lebih cepat.
-   *
    * @type {number}
    */
   REQUEST_TIMEOUT_MS: 15000,
 
   /**
    * Source tag yang ditulis ke kolom Source di Sheets.
-   * Berguna untuk membedakan leads dari halaman atau campaign berbeda.
-   *
    * @type {string}
    */
   SOURCE_TAG: 'mukha-landing-v1',
+
+  /**
+   * Berapa hari ke depan yang ditampilkan di calendar picker.
+   * @type {number}
+   */
+  CALENDAR_DAYS_AHEAD: 14,
 
 };
