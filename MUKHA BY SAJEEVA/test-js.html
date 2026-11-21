@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>JS Test</title></head>
+<body>
+<h2 id="status">Testing...</h2>
+<div id="log" style="font-family:monospace;font-size:13px;line-height:1.8"></div>
+<script>
+var log = document.getElementById('log');
+function check(label, test) {
+  var ok = false;
+  var err = '';
+  try { ok = test(); } catch(e) { err = e.message; }
+  log.innerHTML += '<div style="color:' + (ok?'green':'red') + '">' +
+    (ok ? '✓' : '✗') + ' ' + label + (err ? ' — ' + err : '') + '</div>';
+  return ok;
+}
+
+// Load scripts dynamically and test
+var s1 = document.createElement('script'); s1.src = 'assets/js/mukha.config.js';
+var s2 = document.createElement('script'); s2.src = 'assets/js/form-service.js';
+var s3 = document.createElement('script'); s3.src = 'assets/js/main.js';
+
+s1.onload = function() { check('mukha.config.js loaded', function(){ return typeof window.MUKHA_CONFIG === 'object'; }); };
+s1.onerror = function() { log.innerHTML += '<div style="color:red">✗ mukha.config.js FAILED TO LOAD</div>'; };
+
+s2.onload = function() { check('form-service.js loaded', function(){ return typeof window.MukhaFormService === 'object'; }); };
+s2.onerror = function() { log.innerHTML += '<div style="color:red">✗ form-service.js FAILED TO LOAD</div>'; };
+
+s3.onload = function() {
+  check('main.js loaded', function(){ return true; });
+  check('nav element exists', function(){ return !!document.querySelector('.nav'); });
+  document.getElementById('status').textContent = 'Done — check results above';
+};
+s3.onerror = function(e) { log.innerHTML += '<div style="color:red">✗ main.js FAILED — ' + JSON.stringify(e) + '</div>'; };
+
+document.head.appendChild(s1);
+s1.addEventListener('load', function(){ document.head.appendChild(s2); });
+s2.addEventListener('load', function(){ document.head.appendChild(s3); });
+</script>
+</body>
+</html>

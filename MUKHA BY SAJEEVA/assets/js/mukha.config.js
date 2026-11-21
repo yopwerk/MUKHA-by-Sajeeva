@@ -33,7 +33,7 @@ window.MUKHA_CONFIG = {
    * Satu endpoint yang sama handle POST (submit) dan GET (slots/busy).
    * @type {string}
    */
-  SHEETS_ENDPOINT: 'https://script.google.com/macros/s/AKfycbwc9cYkfniqOIuDLa94cgkp9BCIwyb74URJ4LEgtuZOGYg3sLBmeF46c4ctRnIU92q_eg/exec',
+  SHEETS_ENDPOINT: 'https://script.google.com/macros/s/AKfycbyzMt-mFoD8WUceLX5iN9w6eX2yoNISE573CM9jxef_ei_8G-vIW-HXIqxHu5u2bn4Dtw/exec',
 
   /**
    * Nama sheet (tab) di dalam Google Spreadsheet yang menjadi target.
@@ -57,6 +57,6 @@ window.MUKHA_CONFIG = {
    * Berapa hari ke depan yang ditampilkan di calendar picker.
    * @type {number}
    */
-  CALENDAR_DAYS_AHEAD: 14,
+  CALENDAR_DAYS_AHEAD: 400,
 
 };

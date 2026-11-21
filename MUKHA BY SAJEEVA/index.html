@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mukhā by Sajeeva — Transformasi Properti Berkelas</title>
   <meta name="description" content="Mukhā by Sajeeva menghadirkan standar private villa pada rumah lama Anda—tanpa bongkar total. Transformasi properti berbasis Vegetation First oleh Sajeeva Land." />
-  <link rel="icon" type="image/png" href="assets/favicon%20mukha.png?t=1794885026" />
-  <link rel="icon" type="image/png" href="assets/favicon%20mukha.png?t=1794885026" sizes="any" />
-  <link rel="apple-touch-icon" type="image/png" href="assets/favicon%20mukha.png?t=1794885026" />svg" />
+  <link rel="icon" type="image/webp" href="assets/favicon%20mukha.webp" />
+  <link rel="apple-touch-icon" href="assets/favicon%20mukha.webp" />
+  <!-- Preload critical assets -->
+  <link rel="preload" href="assets/hero.webp" as="image" />
+  <link rel="preload" href="assets/logo.webp" as="image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=66" />
+  <link rel="stylesheet" href="assets/css/style.css?v=68" />
 </head>
 <body>
 
@@ -19,7 +21,7 @@
   <header class="nav" id="top">
     <div class="nav__inner container">
       <a href="#top" class="nav__logo">
-        <img src="assets/logo.png" alt="Mukhā by Sajeeva" class="nav__logo-img" />
+        <img src="assets/logo.webp" alt="Mukhā by Sajeeva" class="nav__logo-img" />
       </a>
       <nav class="nav__links" aria-label="Navigasi utama">
         <a href="#transformasi" class="nav__link" data-id="Transformasi" data-en="Transformation">Transformasi</a>
@@ -63,8 +65,8 @@
 
       <div class="hero__inner container">
 
-        <div class="hero__logo-img" data-animate="fade-up" data-delay="0">
-          <img src="assets/logo.png" alt="Mukhā by Sajeeva" />
+        <div class="hero__logo-img" data-animate="fade-up" data-delay="0" hidden>
+          <img src="assets/logo.webp" alt="Mukhā by Sajeeva" />
         </div>
 
         <div class="hero__body" data-animate="split-text" data-delay="200">
@@ -126,17 +128,73 @@
         </h2>
 
         <div class="ba-wrap" data-animate="fade-up" data-delay="160">
-          <div class="ba" id="ba-1" role="region" aria-label="Perbandingan sebelum dan sesudah">
+          <div class="ba" id="ba-1" role="region" aria-label="Perbandingan sebelum dan sesudah Yogyakarta">
             <div class="ba__track">
               <div class="ba__side ba__side--before">
-                <img src="assets/before - gs.JPG" alt="Kondisi asli properti Griya Selaparang" />
+                <img src="assets/b3.webp" alt="Kondisi asli properti Yogyakarta" loading="lazy" />
                 <div class="ba__label" data-id="sebelum" data-en="before">sebelum</div>
               </div>
               <div class="ba__side ba__side--after">
-                <img src="assets/after - gs.jpg" alt="Hasil transformasi Griya Selaparang" />
+                <img src="assets/a3.webp" alt="Hasil transformasi Yogyakarta" loading="lazy" />
                 <div class="ba__label ba__label--right" data-id="sesudah" data-en="after">sesudah</div>
               </div>
               <div class="ba__divider" id="ba-divider">
+                <div class="ba__line"></div>
+                <button class="ba__handle" aria-label="Geser untuk membandingkan">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                    <path d="M7 11h8M7 11l3-3M7 11l3 3M15 11l-3-3M15 11l-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="ba__info">
+              <div>
+                <p class="ba__project" data-id="Residensial - Yogyakarta" data-en="Residential - Yogyakarta">Residensial - Yogyakarta</p>
+                <p class="ba__type"><span data-id="Transformasi Residensial → Tropical Minimalist" data-en="Residential Transformation → Tropical Minimalist"><em>Transformasi Residensial → Tropical Minimalist</em></span></p>
+              </div>
+              <span class="ba__dur" data-id="6 BULAN" data-en="6 MONTHS">6 BULAN</span>
+            </div>
+          </div>
+
+          <div class="ba" id="ba-2" role="region" aria-label="Perbandingan sebelum dan sesudah Serpong" hidden>
+            <div class="ba__track">
+              <div class="ba__side ba__side--before">
+                <img src="assets/b2.webp" alt="Kondisi asli properti Serpong" loading="lazy" />
+                <div class="ba__label" data-id="sebelum" data-en="before">sebelum</div>
+              </div>
+              <div class="ba__side ba__side--after">
+                <img src="assets/a2.webp" alt="Hasil transformasi Serpong" loading="lazy" />
+                <div class="ba__label ba__label--right" data-id="sesudah" data-en="after">sesudah</div>
+              </div>
+              <div class="ba__divider" id="ba-divider-2">
+                <div class="ba__line"></div>
+                <button class="ba__handle" aria-label="Geser untuk membandingkan">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                    <path d="M7 11h8M7 11l3-3M7 11l3 3M15 11l-3-3M15 11l-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="ba__info">
+              <div>
+                <p class="ba__project" data-id="Residensial - Serpong" data-en="Residential - Serpong">Residensial - Serpong</p>
+                <p class="ba__type"><span data-id="Transformasi Residensial → Modern Minimalist" data-en="Residential Transformation → Modern Minimalist"><em>Transformasi Residensial → Modern Minimalist</em></span></p>
+              </div>
+              <span class="ba__dur" data-id="5 BULAN" data-en="5 MONTHS">5 BULAN</span>
+            </div>
+          </div>
+
+          <div class="ba" id="ba-3" role="region" aria-label="Perbandingan sebelum dan sesudah Griya Selaparang" hidden>
+            <div class="ba__track">
+              <div class="ba__side ba__side--before">
+                <img src="assets/b1.webp" alt="Kondisi asli properti Griya Selaparang" loading="lazy" />
+                <div class="ba__label" data-id="sebelum" data-en="before">sebelum</div>
+              </div>
+              <div class="ba__side ba__side--after">
+                <img src="assets/a1.webp" alt="Hasil transformasi Griya Selaparang" loading="lazy" />
+                <div class="ba__label ba__label--right" data-id="sesudah" data-en="after">sesudah</div>
+              </div>
+              <div class="ba__divider" id="ba-divider-3">
                 <div class="ba__line"></div>
                 <button class="ba__handle" aria-label="Geser untuk membandingkan">
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
@@ -157,20 +215,20 @@
           <p class="ba__caption" data-id="Mengoptimalkan struktur lama menjadi ruang tropis terbuka yang sejuk dan bernilai tinggi — tanpa bongkar total." data-en="Transforming an aging structure into an open tropical space — cool, high-value, without full demolition.">
             Mengoptimalkan struktur lama menjadi ruang tropis terbuka yang sejuk
             dan bernilai tinggi — tanpa bongkar total.
-          </p>
+          </p>          </p>
 
           <div class="ba__thumbs" role="tablist" aria-label="Pilih proyek">
             <button class="ba__thumb ba__thumb--active" role="tab" aria-selected="true" data-idx="0">
-              <div class="ba__thumb-img" style="background:linear-gradient(135deg,#C4D4BC,#9EBC95)"></div>
-              <span>Geriya Selaparang, Lombok</span>
+              <div class="ba__thumb-img" style="background:linear-gradient(135deg,#C0BFBD,#9E9C9A)"></div>
+              <span>Yogyakarta</span>
             </button>
             <button class="ba__thumb" role="tab" aria-selected="false" data-idx="1">
               <div class="ba__thumb-img" style="background:linear-gradient(135deg,#D5C5B0,#BFA890)"></div>
               <span>Serpong</span>
             </button>
             <button class="ba__thumb" role="tab" aria-selected="false" data-idx="2">
-              <div class="ba__thumb-img" style="background:linear-gradient(135deg,#C0BFBD,#9E9C9A)"></div>
-              <span>Yogyakarta</span>
+              <div class="ba__thumb-img" style="background:linear-gradient(135deg,#C4D4BC,#9EBC95)"></div>
+              <span>Geriya Selaparang, Lombok</span>
             </button>
           </div>
         </div>
@@ -230,7 +288,7 @@
             </div>
             <div class="matrix__back">
               <h3 class="matrix__title" data-id="Kurasi Estetika" data-en="Aesthetic Curation">Kurasi Estetika</h3>
-              <p data-id="Rancangan arsitektur timeless dari tim Sajeeva Land melalui pilihan gaya terkurasi yang relevan untuk hunian pribadi maupun pasar sewa premium." data-en="Timeless architectural designs from the Sajeeva Land team through curated style choices relevant for personal residences and the premium rental market.">Rancangan arsitektur <em>timeless</em> dari tim Sajeeva Land melalui pilihan gaya terkurasi yang relevan untuk hunian pribadi maupun pasar sewa premium.</p>
+              <p data-id="Rancangan arsitektur timeless dari tim Sajeeva Land melalui pilihan gaya terkurasi yang relevan untuk hunian pribadi maupun pasar sewa premium." data-en="Timeless architectural designs from the Sajeeva Land team through curated style choices relevant for personal residences and the premium rental market.">Rancangan arsitektur dari tim Sajeeva Land melalui pilihan gaya terkurasi yang relevan untuk hunian pribadi maupun pasar sewa premium.</p>
             </div>
           </div>
 
@@ -323,7 +381,7 @@
               </div>
               <div class="stepper__visual">
                 <div class="stepper__placeholder">
-                  <!-- <img src="assets/phase-01.jpg" alt="Fase survei"> -->
+                  <img src="assets/survey.webp" alt="Fase survei" loading="lazy">
                   <span>Foto / Ilustrasi Fase 01</span>
                 </div>
               </div>
@@ -343,7 +401,7 @@
               </div>
               <div class="stepper__visual">
                 <div class="stepper__placeholder">
-                  <!-- <img src="assets/phase-02.jpg" alt="Fase desain"> -->
+                  <img src="assets/design.webp" alt="Fase desain" loading="lazy">
                   <span>Foto / Ilustrasi Fase 02</span>
                 </div>
               </div>
@@ -363,7 +421,7 @@
               </div>
               <div class="stepper__visual">
                 <div class="stepper__placeholder">
-                  <!-- <img src="assets/phase-03.jpg" alt="Fase eksekusi"> -->
+                  <img src="assets/eksekusi.webp" alt="Fase eksekusi" loading="lazy">
                   <span>Foto / Ilustrasi Fase 03</span>
                 </div>
               </div>
@@ -405,7 +463,7 @@
           <div class="style-panel" id="sty-1" role="tabpanel" aria-labelledby="styb-1">
             <div class="style-panel__img">
               <div class="style-panel__ph" style="background:linear-gradient(135deg,#C4D4BC 0%,#7A9F70 100%)">
-                <!-- <img src="assets/style-tropical.jpg" alt="Tropical Minimalist"> -->
+                <img src="assets/tropical_minimalist.webp" alt="Tropical Minimalist" loading="lazy">
                 <span>Tropical Minimalist</span>
               </div>
               <div class="style-panel__tags">
@@ -429,7 +487,7 @@
           <div class="style-panel" id="sty-2" role="tabpanel" aria-labelledby="styb-2" hidden>
             <div class="style-panel__img">
               <div class="style-panel__ph" style="background:linear-gradient(135deg,#E8DFD0 0%,#C8B99A 100%)">
-                <!-- <img src="assets/style-scandi.jpg" alt="Scandinavian"> -->
+                <img src="assets/scaninavian.webp" alt="Scandinavian" loading="lazy">
                 <span>Scandinavian</span>
               </div>
               <div class="style-panel__tags">
@@ -453,7 +511,7 @@
           <div class="style-panel" id="sty-3" role="tabpanel" aria-labelledby="styb-3" hidden>
             <div class="style-panel__img">
               <div class="style-panel__ph" style="background:linear-gradient(135deg,#BEBDBB 0%,#707070 100%)">
-                <!-- <img src="assets/style-industrial.jpg" alt="Modern Industrial"> -->
+                <img src="assets/modern_minimalist.webp" alt="Modern Industrial" loading="lazy">
                 <span>Modern Industrial</span>
               </div>
               <div class="style-panel__tags">
@@ -564,54 +622,21 @@
               </div>
 
               <div class="form__group" id="fg-jadwal">
-                <label class="form__label"><span data-id="Preferensi Jadwal Konsultasi" data-en="Consultation Schedule Preference">Preferensi Jadwal Konsultasi</span> <span aria-hidden="true">*</span></label>
+                <label class="form__label" for="jadwal-trigger"><span data-id="Preferensi Jadwal Konsultasi" data-en="Consultation Schedule Preference">Preferensi Jadwal Konsultasi</span> <span aria-hidden="true">*</span></label>
 
-                <!-- Hidden input untuk menyimpan ISO string yang dikirim ke server -->
                 <input type="hidden" id="f-jadwal" name="preferensi_jadwal" />
 
-                <!-- Calendar Picker UI -->
-                <div class="slot-picker" id="slot-picker">
+                <!-- Dropdown trigger -->
+                <button type="button" class="jadwal-trigger" id="jadwal-trigger" aria-haspopup="dialog" aria-expanded="false">
+                  <span class="jadwal-trigger__text" id="jadwal-trigger-text" data-id="Pilih tanggal &amp; jam konsultasi" data-en="Select date &amp; time">Pilih tanggal &amp; jam konsultasi</span>
+                  <svg class="jadwal-trigger__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 1v3M11 1v3M2 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
 
-                  <!-- Month navigation -->
-                  <div class="slot-picker__header">
-                    <button type="button" class="slot-picker__nav" id="cal-prev" aria-label="Bulan sebelumnya">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
-                    <span class="slot-picker__month" id="cal-month-label"></span>
-                    <button type="button" class="slot-picker__nav" id="cal-next" aria-label="Bulan berikutnya">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
-                  </div>
-
-                  <!-- Day-of-week headers -->
-                  <div class="slot-picker__weekdays" aria-hidden="true">
-                    <span>Min</span><span>Sen</span><span>Sel</span>
-                    <span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
-                  </div>
-
-                  <!-- Date grid -->
-                  <div class="slot-picker__grid" id="cal-grid" role="grid" aria-label="Pilih tanggal konsultasi"></div>
-
-                  <!-- Slot times — muncul setelah tanggal dipilih -->
-                  <div class="slot-picker__slots" id="cal-slots" hidden>
-                    <p class="slot-picker__slots-label" id="cal-slots-label"></p>
-                    <div class="slot-picker__slots-grid" id="cal-slots-grid" role="group" aria-label="Pilih jam konsultasi"></div>
-                    <p class="slot-picker__loading" id="cal-loading" hidden data-id="Memuat jadwal…" data-en="Loading schedule…">Memuat jadwal…</p>
-                    <p class="slot-picker__noavail" id="cal-noavail" hidden data-id="Semua slot hari ini sudah penuh." data-en="All slots for this day are fully booked.">Semua slot hari ini sudah penuh.</p>
-                  </div>
-
-                  <!-- Selected summary -->
-                  <div class="slot-picker__selected" id="cal-selected" hidden>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span id="cal-selected-label"></span>
-                  </div>
-
-                </div>
                 <span class="form__error" id="err-jadwal" role="alert" aria-live="polite" hidden></span>
               </div>
 
               <div class="form__submit-area">
-                <button class="btn-cta btn-cta--full" type="submit" id="form-submit-btn">
+                <button class="btn-cta btn-cta--full btn-cta--white" type="submit" id="form-submit-btn">
                   <span class="btn-label" data-id="Konfirmasi Jadwal Konsultasi" data-en="Confirm Consultation Schedule">Konfirmasi Jadwal Konsultasi</span>
                   <span class="btn-spinner" hidden aria-hidden="true">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5" stroke-dasharray="22 22" stroke-linecap="round"/></svg>
@@ -722,7 +747,7 @@
   ═══════════════════════════════ -->
   <footer class="footer footer--bg-logo">
     <div class="footer__bg-logo" aria-hidden="true">
-      <img src="assets/sajeevaa logo b.PNG" alt="" class="footer__bg-logo-img" />
+      <img src="assets/sajeevaa logo b.webp" alt="" class="footer__bg-logo-img" />
     </div>
     <div class="container footer__content">
       <div class="footer__statement" data-animate="fade-up">
@@ -732,7 +757,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__brand-content">
-            <img src="assets/logo typo sajeeva.png" alt="Sajeeva Land" class="footer__brand-logo-typo" />
+            <img src="assets/logo typo sajeeva.webp" alt="Sajeeva Land" class="footer__brand-logo-typo" />
             <p class="footer__brand-tagline">Art-Driven Property & Living Ecosystem</p>
             <p class="footer__copy-long">Sajeeva Land lahir dari keyakinan bahwa setiap ruang seharusnya memiliki jiwa, bukan sekadar wujud fisik. Berakar pada sense kesenian, eksplorasi visual, dan ketajaman konsep arsitektur dari Jeva Studio, kami memandang setiap proyek sebagai karya yang hidup dan berkarakter.</p>
             <p class="footer__copy-long">Value ini kami terapkan ke seluruh ekosistem properti di Lombok dan Bali—mulai dari pengembangan hunian, transformasi renovasi (Mukhā), arsitektur prefabrikasi (Bloxlab), hingga manajemen operasional vila (Vāsa Living). Satu visi artistik, diterapkan untuk membentuk masa depan ruang yang bernilai.</p>
@@ -828,8 +853,57 @@
     </div>
   </div>
 
-  <script src="assets/js/mukha.config.js?v=5"></script>
-  <script src="assets/js/form-service.js?v=5"></script>
-  <script src="assets/js/main.js?v=69"></script>
+  <!-- ── CALENDAR MODAL ─────────────────────────────── -->
+  <div class="cal-modal" id="cal-modal" role="dialog" aria-modal="true" aria-labelledby="cal-modal-title" hidden>
+    <div class="cal-modal__backdrop" id="cal-modal-backdrop"></div>
+    <div class="cal-modal__card">
+      <div class="cal-modal__header">
+        <h3 class="cal-modal__title" id="cal-modal-title" data-id="Pilih Jadwal Konsultasi" data-en="Select Consultation Schedule">Pilih Jadwal Konsultasi</h3>
+        <button type="button" class="cal-modal__close" id="cal-modal-close" aria-label="Tutup">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="cal-modal__body">
+        <div class="slot-picker" id="slot-picker">
+          <div class="slot-picker__header">
+            <button type="button" class="slot-picker__nav" id="cal-prev" aria-label="Bulan sebelumnya">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <span class="slot-picker__month" id="cal-month-label"></span>
+            <button type="button" class="slot-picker__nav" id="cal-next" aria-label="Bulan berikutnya">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="slot-picker__weekdays" aria-hidden="true">
+            <span>Min</span><span>Sen</span><span>Sel</span>
+            <span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+          </div>
+          <div class="slot-picker__grid" id="cal-grid" role="grid"></div>
+        </div>
+        <div class="cal-modal__slots" id="cal-slots" hidden>
+          <p class="slot-picker__slots-label" id="cal-slots-label"></p>
+          <p class="slot-picker__loading" id="cal-loading" hidden>Memuat jadwal…</p>
+          <p class="slot-picker__noavail" id="cal-noavail" hidden>Semua slot hari ini sudah penuh.</p>
+          <select class="cal-modal__slot-select" id="cal-slot-select">
+            <option value="">-- Pilih jam --</option>
+          </select>
+        </div>
+      </div>
+      <div class="cal-modal__footer">
+        <div class="slot-picker__selected" id="cal-selected" hidden>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="cal-selected-label"></span>
+        </div>
+        <button type="button" class="cal-modal__confirm-btn" id="cal-modal-confirm" disabled>
+          <span data-id="Konfirmasi Jadwal" data-en="Confirm Schedule">Konfirmasi Jadwal</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/mukha.config.js?v=5" defer></script>
+  <script src="assets/js/form-service.js?v=5" defer></script>
+  <script src="assets/js/main.js?v=74" defer></script>
 </body>
 </html>
