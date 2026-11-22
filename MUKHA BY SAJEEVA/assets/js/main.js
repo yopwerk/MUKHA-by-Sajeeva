@@ -395,7 +395,13 @@
       t.classList.toggle('stepper__tab--active', i === sIdx);
       t.setAttribute('aria-selected', String(i === sIdx));
     });
-    sPanels.forEach(function (p, i) { p.hidden = i !== sIdx; });
+    // Mobile: semua panel visible, navigasi pakai scroll
+    // Desktop: pakai hidden
+    if (sIsMobile()) {
+      sPanels.forEach(function (p) { p.hidden = false; });
+    } else {
+      sPanels.forEach(function (p, i) { p.hidden = i !== sIdx; });
+    }
     sDots.forEach(function (d, i) {
       d.classList.toggle('stepper__dot--active', i === sIdx);
       d.setAttribute('aria-current', String(i === sIdx));
@@ -460,6 +466,47 @@
   if (sPrev) sPrev.addEventListener('click', function () { goStep(sIdx - 1); });
   if (sNext) sNext.addEventListener('click', function () { goStep(sIdx + 1); });
   goStep(0);
+
+  // Touch swipe handler untuk stepper panels (mobile/tablet)
+  (function() {
+    var panels = $q('.stepper__panels');
+    if (!panels) return;
+    var swipeStartX = 0;
+    var swipeStartY = 0;
+
+    panels.addEventListener('touchstart', function(e) {
+      swipeStartX = e.changedTouches[0].clientX;
+      swipeStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+
+    panels.addEventListener('touchend', function(e) {
+      var dx = e.changedTouches[0].clientX - swipeStartX;
+      var dy = e.changedTouches[0].clientY - swipeStartY;
+      // Hanya proses swipe horizontal (bukan scroll vertikal)
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+      if (dx < 0) goStep(sIdx + 1); // swipe kiri → next
+      else        goStep(sIdx - 1); // swipe kanan → prev
+    }, { passive: true });
+
+    // Update dot saat scroll manual berhenti
+    panels.addEventListener('scroll', function() {
+      var panelWidth = panels.offsetWidth;
+      if (panelWidth === 0) return;
+      var idx = Math.round(panels.scrollLeft / panelWidth);
+      if (idx !== sIdx) {
+        sIdx = idx;
+        sTabs.forEach(function(t, i) {
+          t.classList.toggle('stepper__tab--active', i === sIdx);
+          t.setAttribute('aria-selected', String(i === sIdx));
+        });
+        sDots.forEach(function(d, i) {
+          d.classList.toggle('stepper__dot--active', i === sIdx);
+          d.setAttribute('aria-current', String(i === sIdx));
+        });
+        if (sLabel) sLabel.textContent = '0' + (sIdx + 1) + ' / 0' + sTabs.length;
+      }
+    }, { passive: true });
+  })();
   
   // Start auto-carousel on mobile with nudge hint when section visible
   if (sIsMobile()) {
@@ -486,7 +533,11 @@
     if (!sIsMobile() && sAutoTimer) {
       clearTimeout(sAutoTimer);
       sAutoTimer = null;
+      // Desktop: terapkan hidden kembali
+      sPanels.forEach(function (p, i) { p.hidden = i !== sIdx; });
     } else if (sIsMobile() && !sAutoTimer) {
+      // Mobile: semua panel visible
+      sPanels.forEach(function (p) { p.hidden = false; });
       sAutoTimer = setTimeout(autoNextSlide, 4000);
     }
   });

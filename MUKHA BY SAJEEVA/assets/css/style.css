@@ -538,10 +538,10 @@ ul,ol { list-style:none; }
   font-size: clamp(.9375rem,1.5vw,1.0625rem);
   font-weight: 700;
   line-height: 1.8;
-  color: rgba(246,244,239,.65);
+  color: rgba(246,244,239,.92);
   margin-bottom: 2.5rem;
 }
-.hero__sub em { font-style: normal; color: rgba(246,244,239,.8); }
+.hero__sub em { font-style: normal; color: rgba(246,244,239,1); }
 
 .hero__cta-group {
   display: flex;
@@ -552,7 +552,7 @@ ul,ol { list-style:none; }
 }
 .hero__micronote {
   font-size: .75rem;
-  color: rgba(246,244,239,.45);
+  color: rgba(246,244,239,.75);
   letter-spacing: .02em;
 }
 
@@ -626,7 +626,7 @@ ul,ol { list-style:none; }
   font-weight: 500;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: rgba(246,244,239,.45);
+  color: rgba(246,244,239,.8);
 }
 
 @media (max-width: 768px) {
@@ -1307,9 +1307,14 @@ ul,ol { list-style:none; }
   min-height: 44px;
   cursor: pointer;
   transition: background .2s, color .2s, border-color .2s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
-.style-pill:hover { border-color: var(--charcoal); color: var(--charcoal); }
+@media (hover: hover) {
+  .style-pill:hover { border-color: var(--charcoal); color: var(--charcoal); }
+}
 .style-pill--active { background: var(--charcoal); color: var(--white); border-color: var(--charcoal); }
+.style-pill:not(.style-pill--active):active { background: transparent; color: rgba(30,32,30,.55); border-color: var(--hair-md); }
 
 .style-panel {
   display: grid;
